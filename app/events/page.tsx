@@ -5,7 +5,11 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
     const filters = await searchParams
     const page = filters.page ?? 1
     const perPage = filters.perPage ?? 10
-    const events = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/events?page=${page}&perPage=${perPage}`).then(res => res.json())
+    const eventsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/admin/events?page=${page}&perPage=${perPage}`)
+    const events = await eventsRes.json()
+    if (!eventsRes.ok) {
+        return <p className="error-message">Failed to load events</p>
+    }
     console.log(events)
     return (
         <>
