@@ -1,6 +1,4 @@
-import { Suspense } from "react"
 import { EventsFilters, MyEvent } from "./events.type"
-import Image from "next/image"
 import EventsGrid from "../components/EventsGrid/EventsGrid"
 export default async function EventsPage({ searchParams }: { searchParams: Promise<EventsFilters> }) {
     const filters = await searchParams

@@ -1,6 +1,5 @@
 'use client'
 import Button from "@/app/components/UI/Button/Button";
-import styles from "./EventCard.module.scss";
 import EventTimeToLeft from "../EventTimeToLeft/EventTimeToLeft";
 import PlaceIcon from "@mui/icons-material/Place";
 import DateRangeIcon from "@mui/icons-material/DateRange";
@@ -13,12 +12,14 @@ interface EventCardProps {
   event: MyEvent;
   sectionSlug: string;
 }
+
 const EventCard = ({ event, sectionSlug }: EventCardProps) => {
   return (
     <Link href={`/events/${event.id.toString()}`}>
-      <div className={styles["event-card"]}>
-        <div className={styles["event-card-content-img"]}>
-          <div className={styles["event-card-img"]}>
+      <div className="flex flex-col justify-between gap-2 rounded-xl pb-2 bg-white border border-[var(--primary-color)]">
+        <div className="flex flex-col gap-2 text-[var(--black)]">
+          {/* Image */}
+          <div className="h-[200px]">
             <Image
               src={
                 event?.images?.length
@@ -28,29 +29,32 @@ const EventCard = ({ event, sectionSlug }: EventCardProps) => {
               alt={event.name}
               width={600}
               height={400}
-              className="mb-4 rounded"
+              className="w-full h-full rounded-xl object-cover mb-4"
             />
           </div>
-          <div className={styles["event-card-content"]}>
-            <div className={styles["event-card-title"]}>{event.name}</div>
+
+          {/* Content */}
+          <div className="flex flex-col gap-2 p-2">
+            <div className="font-bold text-lg text-center">{event.name}</div>
+
             {sectionSlug === "upcoming-events" && (
               <EventTimeToLeft isoDate={event.date} />
             )}
-            <div className={styles["event-card-date"]}>
-              <div>
-                <DateRangeIcon sx={{ color: "var(--primary-color)" }} />
-              </div>
+
+            <div className="flex gap-2 items-center">
+              <DateRangeIcon sx={{ color: "var(--primary-color)" }} />
               <div>{transformIsoDateToReadable(event.date)}</div>
             </div>
-            <div className={styles["event-card-place"]}>
-              <div>
-                <PlaceIcon sx={{ color: "var(--primary-color)" }} />
-              </div>
+
+            <div className="flex gap-2 items-center">
+              <PlaceIcon sx={{ color: "var(--primary-color)" }} />
               <div>{event.location}</div>
             </div>
-            <div className={styles["event-card-desc"]}>{event.description}</div>
+
+            <div className="text-sm line-clamp-1">{event.description}</div>
           </div>
         </div>
+
         <Button>
           <div>Join</div>
         </Button>
@@ -58,4 +62,5 @@ const EventCard = ({ event, sectionSlug }: EventCardProps) => {
     </Link>
   );
 };
+
 export default EventCard;

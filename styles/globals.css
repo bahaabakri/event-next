@@ -1,5 +1,6 @@
-@use './variables';
-@use "tailwindcss";
+@import './variables.css';
+@import "./tailwind-theme.css";
+@import "tailwindcss";
 body {
     background-color: #fff;
 }
