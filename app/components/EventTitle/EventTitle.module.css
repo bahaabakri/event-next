@@ -1,0 +1,12 @@
+.events-title-wrapper {
+  color: green;
+  @apply flex justify-between items-center;
+}
+.events-title {
+  @apply font-bold text-xl;
+  color: var(--black);
+}
+.events-title-first-letter {
+  color: var(--primary-color);
+  @apply text-2xl;
+}

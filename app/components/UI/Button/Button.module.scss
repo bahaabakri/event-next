@@ -1,0 +1,18 @@
+.button-wrapper {
+  width: fit-content;
+  margin: 0 auto;
+  &.primary-button button {
+    background-color: var(--primary-color);
+    @apply text-white;
+  }
+  &.second-button button {
+    color: var(--black);
+    @apply bg-white shadow-2xl;
+  }
+  button {
+    @apply text-lg lg:text-2xl px-5 p-2 shadow-sm rounded-xl flex gap-2 items-center;
+    &:disabled {
+      @apply text-gray-500 bg-gray-300;
+    }
+  }
+}
