@@ -1,0 +1,13 @@
+@import "./tailwind-theme.css";
+@import "tailwindcss";
+@import "keen-slider/keen-slider.min.css";
+
+body {
+    background-color: #fff;
+}
+.spinner {
+    @apply h-5 w-5 border-2 border-white rounded-full animate-spin;
+}
+.error-message {
+    @apply text-sm text-error-500;
+}
