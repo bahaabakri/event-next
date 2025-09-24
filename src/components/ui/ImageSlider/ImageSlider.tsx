@@ -58,14 +58,14 @@ const ImageSlider = ({ images, alt }: ImageSliderProps) => {
             {images.length > 1 && loaded && instanceRef.current && (
                 <>
                     <KeyboardArrowLeftIcon
-                        className={`absolute top-1/2 -translate-y-1/2 cursor-pointer text-white left-2 text-4xl drop-shadow-lg`}
+                        className='absolute top-1/2 -translate-y-1/2 cursor-pointer text-white left-2 !text-4xl drop-shadow-lg'
                         onClick={(e) => {
                             e.stopPropagation();
                             instanceRef.current?.prev();
                         }}
                     />
                     <KeyboardArrowRightIcon
-                        className={`absolute top-1/2 -translate-y-1/2 cursor-pointer text-white right-2 text-4xl drop-shadow-lg`}
+                        className='absolute top-1/2 -translate-y-1/2 cursor-pointer text-white right-2 !text-4xl drop-shadow-lg'
                         onClick={(e) => {
                             e.stopPropagation();
                             instanceRef.current?.next();

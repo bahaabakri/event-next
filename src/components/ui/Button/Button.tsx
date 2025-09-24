@@ -25,14 +25,14 @@ const Button: FC<ButtonProps> = ({
     >
       <motion.div
         {...(!buttonProps.disabled && {
-          whileHover: { scale: 1.2 },
-          whileTap: { scale: 0.8 },
+          whileHover: { scale: 1.1 },
+          whileTap: { scale: 0.9 },
         })}
       >
         <button
           {...buttonProps}
           className={clsx(
-            "text-lg lg:text-2xl px-md py-xs shadow-sm flex gap-xs items-center",
+            "text-md lg:text-lg px-lg py-xs shadow-sm flex gap-xs items-center cursor-pointer",
             buttonProps.disabled && "text-gray-500 bg-gray-300"
           )}
         >

@@ -75,8 +75,9 @@
   --spacing-xs: 8px;
   --spacing-sm: 12px;
   --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
+  --spacing-lg: 20px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
   /* Font Sizes */
   --text-xxxs: 4px;
   --text-xxs: 8px;

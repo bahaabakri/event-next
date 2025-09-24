@@ -14,7 +14,7 @@ interface EventsGridProps {
 const EventsGrid = ({ events, sectionSlug, sectionName, totalEvents }: EventsGridProps) => {
   return (
     <>
-      <div className="container px-xs mx-auto flex flex-col gap-md my-md">
+      <div className="container px-xs mx-auto flex flex-col gap-lg my-md">
         <EventTitle sectionName={sectionName} children={undefined} />
 
         <ul className="flex gap-md flex-wrap">

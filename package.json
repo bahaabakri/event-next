@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "generate-theme": "node src/scripts/generate-theme.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

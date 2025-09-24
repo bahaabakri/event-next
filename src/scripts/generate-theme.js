@@ -49,5 +49,5 @@ if (radius) {
 css += "}\n";
 
 // Write output
-fs.writeFileSync("styles/tailwind-theme.css", css);
+fs.writeFileSync("src/styles/tailwind-theme.css", css);
 console.log("✅ theme.css generated with primary palette!");
