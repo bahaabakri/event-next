@@ -1,8 +1,11 @@
+import { API_BASE_URL } from "@/api.config";
 import Hero from "@/components/features/home/Hero/Hero";
+import { getActiveHero } from "@/lib/server/hero";
 
-const Home = () => {
+export default async function HomePage () {
+  const activeHero = await getActiveHero();
+
   return (
-    <Hero />
+    <Hero  activeHero={activeHero}/>
   );
 }
-export default Home;

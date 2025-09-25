@@ -1,9 +1,10 @@
 import { FC } from "react"
 import { MyEvent } from "../../../types/events.type"
 import EventDetails from "@/components/features/events/EventDetails/EventDetails"
+import { API_BASE_URL } from "@/api.config"
 const EventPage: FC<{ params: Promise<{id: string}> }> = async ({ params }) => {
     const {id} = await params
-    const eventRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/events/${id}`)
+    const eventRes = await fetch(`${API_BASE_URL}/events/${id}`)
     const event = (await eventRes.json()) as MyEvent
     if (!eventRes.ok) {
         return <p className="error-message">Failed to load event</p>

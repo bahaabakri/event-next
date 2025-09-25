@@ -7,6 +7,7 @@ import { transformIsoDateToReadable } from "@/services/date";
 import { MyEvent } from "@/types/events.type";
 import Link from "next/link";
 import Image from "next/image";
+import { API_BASE_URL } from "@/api.config";
 
 interface EventCardProps {
   event: MyEvent;
@@ -23,7 +24,7 @@ const EventCard = ({ event, sectionSlug }: EventCardProps) => {
             <Image
               src={
                 event?.images?.length
-                  ? `${process.env.NEXT_PUBLIC_BASE_URL}${event.images[0].url}`
+                  ? `${API_BASE_URL}${event.images[0].url}`
                   : "/next.svg"
               }
               alt={event.name}

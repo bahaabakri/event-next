@@ -1,13 +1,20 @@
 'use client'
 import BackgroundSlider from '@/components/ui/BackgroundSlider/BackgroundSlider';
 import { motion } from "framer-motion";
-import heroImagesPath from './hero-images';
 import Button from '@/components/ui/Button/Button';
 import OLogo from '@/components/ui/OlLgo/OLogo';
-const Hero = () => {
+import { MyHero } from '@/types/hero.type';
+import { FC } from 'react';
+import { API_BASE_URL } from '@/api.config';
+export type HeroProps = {
+    activeHero: MyHero
+}
+const Hero:FC<HeroProps> = ({activeHero}) => {
+    console.log(activeHero);
+    
     return (
         <div className='overflow-hidden relative h-screen w-screen'>
-            <BackgroundSlider imagesPath={heroImagesPath} />
+            <BackgroundSlider imagesPath={activeHero.images.map(el => `${API_BASE_URL}${el.url}`)} />
             <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center text-white'>
                 <motion.div
                     initial={{ opacity: 0, scale: 0 }}
