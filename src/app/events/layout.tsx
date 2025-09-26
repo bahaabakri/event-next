@@ -1,3 +1,7 @@
-export default function EventsLayout({ children }: { children: React.ReactNode }) {
+export default function EventsLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return <section className="p-xl">{children}</section>;
 }

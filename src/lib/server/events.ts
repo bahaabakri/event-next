@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@/api.config"
-import { EventsFilters, MyEventResponse } from "@/types/events.type"
+import { EventsFilters, MyEvent, MyEventResponse } from "@/types/events.type"
 
 export async function getEvents(filters: EventsFilters): Promise<MyEventResponse> {
   const page = filters.page ?? 1
@@ -16,7 +16,7 @@ export async function getEvents(filters: EventsFilters): Promise<MyEventResponse
   return res.json() as Promise<MyEventResponse>
 }   
 
-export async function getEventById(id: string | number) {
+export async function getEventById(id: string | number): Promise<MyEvent>  {
   const res = await fetch(`${API_BASE_URL}/events/${id}`,
     {
         next: { revalidate: 3600 },
