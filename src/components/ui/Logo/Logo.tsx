@@ -4,9 +4,9 @@ import Link from 'next/link';
 // import wheelImg from '@/assets/wheel.svg';
 const Logo = () => {
 return (
-    <div className={styles['logo-wrapper']}>
+    <div className='text-white text-4xl font-bold'>
         <Link  href="/">
-            <div className={styles['letters']}>
+            <div className='flex flex-nowrap items-end'>
                 <span className={styles['e-letter']}>E</span>
                 <span>vent</span>
                 <OLogo />
