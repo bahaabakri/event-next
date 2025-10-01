@@ -29,9 +29,7 @@ const AuthDialog: FC<AuthDialogProps> = ({
   title,
   subtitle,
   errorMessage,
-  successMessage,
-  isSubmitButtonLoading,
-  isSubmitButtonDisabled,
+  successMessage
 }) => {
   const [open, setOpen] = useState<boolean>(true);
   // const navigate = useNavigate();

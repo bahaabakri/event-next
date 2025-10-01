@@ -9,44 +9,56 @@ import Button from "@/components/ui/Button/Button";
 import CustomOtpInput from "@/components/ui/CustomOtpInput/CustomOtpInput";
 import { sub } from "framer-motion/client";
 import { verifyOTP } from "@/lib/server/auth";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import FormButtons from "@/components/ui/FormButtons/FormButtons";
 
 const otpFormValidationSchema = yup.object({
-  email: yup
+  otp: yup
     .string()
-    .required("Email is required")
-    .email("Enter valid email address"),
-  otp: yup.string().required("OTP is required"),
+    .required("OTP is required")
+    .min(6, "OTP must be 6 digits")
+    .max(6, "OTP must be 6 digits"),
 });
 
 export default function AuthOtp() {
-  const { pending: isPending } = useFormStatus();
+  const title = " Verify your email.";
+  const subtitle = "Please enter the code we just sent to your email address.";
   const [email, setEmail] = useState<string>("");
+  const [formStateRes, formAction, isPending] = useActionState(verifyOTP, {
+    success: false,
+    message: "",
+  });
   const {
     control,
+    watch,
     setValue,
     formState: { isValid, isDirty },
   } = useForm({
     defaultValues: { otp: "" },
     resolver: yupResolver(otpFormValidationSchema),
-    mode: "onBlur",
+    mode: "onChange",
   });
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const email = queryParams.get("email");
     setEmail(email || "");
   });
-  const title = " Verify your email.";
-  const subtitle = "Please enter the code we just sent to your email address.";
+  useEffect(() => {
+    if (formStateRes.success) {
+      console.log("access-token", formStateRes.access_token);
+
+      // router.push(`/otp?email=${watch('email')}`);
+    } else {
+      console.log("error", formStateRes);
+      setValue("otp", formStateRes.message);
+    }
+  }, [formStateRes.success]);
   return (
-    <AuthDialog
-      title={title}
-      subtitle={subtitle}
-      isSubmitButtonDisabled={isPending || (isDirty && !isValid)}
-      isSubmitButtonLoading={isPending}
-    >
-      <form action={verifyOTP} className="flex flex-col gap-5">
+    <AuthDialog title={title} subtitle={subtitle}>
+      <form action={formAction} className="flex flex-col gap-5">
         <input type="hidden" name="email" value={email} />
+        <input type="hidden" name="otp" value={watch("otp")} />{" "}
+        {/* ✅ Add this */}
         <Controller
           name="otp"
           control={control}
@@ -57,26 +69,15 @@ export default function AuthOtp() {
               length={6}
               maxWidth={48}
               textColor="var(--color-gray-500)"
-              onChange={(otp) => {
-                if (otp.length >= 6) {
-                  setValue("otp", otp);
-                }
-              }}
             />
           )}
         />
-        <div className="flex justify-end gap-5">
-          <Button className="m-0" type="button" isSecondButton={true}>
-            <div>Cancel</div>
-          </Button>
-          <Button
-            disabled={isPending || (isDirty && !isValid)}
-            isPending={isPending}
-            type="submit"
-          >
-            <div>Verify</div>
-          </Button>
-        </div>
+        <FormButtons
+          isPending={isPending}
+          isDirty={isDirty}
+          isValid={isValid}
+          submitButtonText="Verify"
+        />
       </form>
     </AuthDialog>
   );
