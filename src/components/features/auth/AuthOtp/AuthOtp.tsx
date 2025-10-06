@@ -11,6 +11,10 @@ import { sub } from "framer-motion/client";
 import { verifyOTP } from "@/lib/server/auth";
 import { useActionState, useEffect, useState } from "react";
 import FormButtons from "@/components/ui/FormButtons/FormButtons";
+import { setAuthToken } from "@/lib/client/auth-cookie";
+import { AppDispatch } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { checkIsAuthenticated } from "@/store/authSlice";
 
 const otpFormValidationSchema = yup.object({
   otp: yup
@@ -23,6 +27,7 @@ const otpFormValidationSchema = yup.object({
 export default function AuthOtp() {
   const title = " Verify your email.";
   const subtitle = "Please enter the code we just sent to your email address.";
+  const dispatch = useDispatch<AppDispatch>();
   const [email, setEmail] = useState<string>("");
   const [formStateRes, formAction, isPending] = useActionState(verifyOTP, {
     success: false,
@@ -45,10 +50,13 @@ export default function AuthOtp() {
   });
   useEffect(() => {
     if (formStateRes.success) {
-      console.log("access-token", formStateRes.access_token);
-
+      // console.log("access-token", formStateRes.access_token);
+      if (formStateRes.access_token) {
+        setAuthToken(formStateRes.access_token)
+        dispatch(checkIsAuthenticated())
+      }
       // router.push(`/otp?email=${watch('email')}`);
-    } else {
+    } else { 
       console.log("error", formStateRes);
       setValue("otp", formStateRes.message);
     }

@@ -2,11 +2,14 @@
 import { FC, useEffect, useState } from "react"
 // import heroImagesPath from '../hero-images';
 import { AnimatePresence, motion } from "framer-motion";
+import useAuth from "@/hooks/useAuth";
 interface BackgroundSliderProps {
     imagesPath: string[];
 }
 const BackgroundSlider:FC<BackgroundSliderProps> = ({imagesPath}) => {
     const [selectedHeroImageIndex, setSelectedHeroImageIndex] = useState<number>(0)
+    const {isAuthenticated, user} =  useAuth()
+
     useEffect(() => {
         const heroImagesInterval = setInterval(() => {
             setSelectedHeroImageIndex(prev => (prev + 1) % imagesPath.length)
@@ -16,6 +19,10 @@ const BackgroundSlider:FC<BackgroundSliderProps> = ({imagesPath}) => {
             clearInterval(heroImagesInterval)
         }
     })
+    useEffect(() => {
+        console.log(isAuthenticated, user);
+        
+    }, [isAuthenticated, user])
     return (
         <div className='w-full h-full bg-black'>
         {
