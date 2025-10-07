@@ -6,7 +6,7 @@ const useAuth = () => {
   const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   // useEffect(() => {
-  //   dispatch(checkIsAuthenticated());
+  //    );
   // }, [dispatch]);
 
   return { user, isAuthenticated };

@@ -1,0 +1,9 @@
+
+.menu-item {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    .active {
+        color: var(--color-primary-500);
+    }
+}
