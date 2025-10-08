@@ -15,6 +15,7 @@ import { setAuthToken } from "@/lib/client/auth-cookie";
 import { AppDispatch } from "@/store/store";
 import { useDispatch } from "react-redux";
 import { checkIsAuthenticated } from "@/store/authSlice";
+import { useRouter } from "next/navigation";
 
 const otpFormValidationSchema = yup.object({
   otp: yup
@@ -28,6 +29,7 @@ export default function AuthOtp() {
   const title = " Verify your email.";
   const subtitle = "Please enter the code we just sent to your email address.";
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter()
   const [email, setEmail] = useState<string>("");
   const [formStateRes, formAction, isPending] = useActionState(verifyOTP, {
     success: false,
@@ -54,8 +56,8 @@ export default function AuthOtp() {
       if (formStateRes.access_token) {
         setAuthToken(formStateRes.access_token)
         dispatch(checkIsAuthenticated())
+        router.push('/')
       }
-      // router.push(`/otp?email=${watch('email')}`);
     } else { 
       console.log("error", formStateRes);
       setValue("otp", formStateRes.message);
