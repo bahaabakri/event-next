@@ -1,5 +1,6 @@
 import { SelectedImage } from "./images.type";
 import { Pagination } from "./pagination.type";
+import { User } from "./user.type";
 
 export type EventsFilters = {
     page?: number;
@@ -19,9 +20,21 @@ export type MyEvent = {
     createdAt: Date;
     updatedAt: Date;
     createdAdminId: number;
+    joinedUsers: {
+        user: User
+    }[]
+    createdBy: User
 }
 
 export type MyEventResponse = {
     data: MyEvent[];
     meta: Pagination;
+}
+
+export type JoinEventResponse = {
+    message:string;
+    userEvent: {
+        user:User;
+        event:MyEvent
+    }
 }

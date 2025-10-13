@@ -10,6 +10,7 @@ import NavMenuItem from './NavMenuItem/NavMenuItem'
 const Navbar = () => {
     // call use Auth hook to recheck the authentication state
     const { isAuthenticated} = useAuth();
+    console.log('isAuthenticated', isAuthenticated)
     return (
         <div className={styles['main-navbar']}>
             <div className='container m-auto px-10 py-5  flex justify-between'>

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import ClientThemeProvider from "@/providers/ClientThemeProvider/ClientThemeProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_CLIENT_ID } from "@/api.config";
+import { SnackbarProvider } from "./SnackbarProvider/SnackbarProvider";
 
 function InitAuth() {
   // dispatch check auth action on first load
@@ -17,13 +18,15 @@ function InitAuth() {
   return null; // No UI
 }
 export function Providers({ children }: { children: React.ReactNode }) {
-  console.log(GOOGLE_CLIENT_ID)
+  console.log(GOOGLE_CLIENT_ID);
   return (
-        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-          <Provider store={store}>
-            <InitAuth />
-            <ClientThemeProvider>{children}</ClientThemeProvider>
-          </Provider>
-        </GoogleOAuthProvider>
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <InitAuth />
+        <ClientThemeProvider>
+          <SnackbarProvider>{children}</SnackbarProvider>
+        </ClientThemeProvider>
+      </Provider>
+    </GoogleOAuthProvider>
   );
 }

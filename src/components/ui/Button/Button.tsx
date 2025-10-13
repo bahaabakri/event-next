@@ -33,7 +33,7 @@ const Button: FC<ButtonProps> = ({
           {...buttonProps}
           className={clsx(
             "text-md lg:text-lg px-lg py-xs shadow-sm flex gap-xs items-center cursor-pointer rounded-xl",
-            buttonProps.disabled && "text-gray-600 bg-gray-800"
+            buttonProps.disabled || isPending && "text-gray-600 bg-gray-800"
           )}
         >
           {isPending && <div className="spinner" />}
