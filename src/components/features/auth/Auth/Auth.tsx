@@ -33,34 +33,29 @@ export default function Auth() {
     loginWithGoogleBE,
     { success: false, message: "" }
   );
-  const [isPendingTransition, startTransition] = useTransition();
+  const [isGoogleLoginPending, startGoogleLoginTransition] = useTransition();
 
-  const [isGoogleLoginPending, setIsGoogleLoginPending] = useState(false);
+  // const [isGoogleLoginPending, setIsGoogleLoginPending] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     if (googleLoginState.success && googleLoginState.access_token) {
       // Save token and update auth state
-      setIsGoogleLoginPending(false);
       setAuthToken(googleLoginState.access_token);
       dispatch(checkIsAuthenticated());
       router.push("/"); // or wherever you want
     } else if (googleLoginState.message) {
-      setIsGoogleLoginPending(false);
       console.log("Google login failed:", googleLoginState.message);
     }
   }, [googleLoginState]);
   const handleGoogleOAuthSuccess = async (tokenResponse: TokenResponse) => {
-    console.log("HEERERE");
-
-    setIsGoogleLoginPending(true);
     await new Promise((r) => setTimeout(r, 50)); // ensure re-render flush
     const token = tokenResponse.access_token;
     console.log("GOOGLE LOGIN SUCCESS", token);
     const formData = new FormData();
     formData.append("token", token);
     // trigger the server action
-    startTransition(() => {
+    startGoogleLoginTransition(() => {
       googleLoginAction(formData);
     });
   };
