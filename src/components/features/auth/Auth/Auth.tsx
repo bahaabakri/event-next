@@ -7,7 +7,7 @@ import AuthDialog from "@/components/features/auth/AuthDialog/AuthDialog";
 import { loginOrRegister, loginWithGoogleBE } from "@/lib/server/auth";
 import CustomTextField from "@/components/ui/CustomTextField/CustomTextFiield";
 import FormButtons from "@/components/ui/FormButtons/FormButtons";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState, useTransition } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { useGoogleLogin } from "@react-oauth/google";
 import type { TokenResponse } from "@react-oauth/google";
@@ -33,6 +33,7 @@ export default function Auth() {
     loginWithGoogleBE,
     { success: false, message: "" }
   );
+  const [isPendingTransition, startTransition] = useTransition();
 
   const [isGoogleLoginPending, setIsGoogleLoginPending] = useState(false);
 
@@ -59,7 +60,9 @@ export default function Auth() {
     const formData = new FormData();
     formData.append("token", token);
     // trigger the server action
-    googleLoginAction(formData);
+    startTransition(() => {
+      googleLoginAction(formData);
+    });
   };
   const handleGoogleOAuthError = () => {
     console.log("Login Failed");

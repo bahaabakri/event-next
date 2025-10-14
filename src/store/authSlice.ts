@@ -34,7 +34,7 @@ export const checkIsAuthenticated = createAsyncThunk(
       }
       const user = await getUser(token)
       // console.log(user)
-      return user.user;
+      return user;
       
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {

@@ -64,7 +64,7 @@ export async function verifyOTP(prevState:any, formData: FormData) {
   }
 }
 
-export async function getUser(token:string): Promise<{user:User}> {
+export async function getUser(token:string): Promise<User> {
   // console.log('getAuthToken()', token)
   const res = await fetch(`${API_BASE_URL}/users/me`, {
     method: 'GET',
@@ -74,7 +74,7 @@ export async function getUser(token:string): Promise<{user:User}> {
   })
   // const rrr= await res.json()
   // console.log(rrr)
-  return res.json() as Promise<{user:User}>
+  return res.json() as Promise<User>
 }
 
 export async function loginWithGoogleBE(prevState:any, formData:FormData) {

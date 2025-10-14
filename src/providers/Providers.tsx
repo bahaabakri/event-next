@@ -18,7 +18,7 @@ function InitAuth() {
   return null; // No UI
 }
 export function Providers({ children }: { children: React.ReactNode }) {
-  console.log(GOOGLE_CLIENT_ID);
+  // console.log(GOOGLE_CLIENT_ID);
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Provider store={store}>
