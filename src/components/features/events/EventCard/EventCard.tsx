@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Button from "@/components/ui/Button/Button";
 import EventTimeToLeft from "@/components/features/events/EventTimeToLeft/EventTimeToLeft";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -8,19 +8,18 @@ import { MyEvent } from "@/types/events.type";
 import Link from "next/link";
 import Image from "next/image";
 import { API_BASE_URL } from "@/api.config";
-
+import { div } from "framer-motion/client";
 interface EventCardProps {
   event: MyEvent;
   sectionSlug: string;
 }
-
-const EventCard = ({ event, sectionSlug }: EventCardProps) => {
+export default function EventCard({ event, sectionSlug }: EventCardProps) {
   return (
-    <Link href={`/events/${event.id.toString()}`}>
-      <div className="flex flex-col justify-between gap-xs rounded-xl pb-xs bg-white border border-primary-500">
-        <div className="flex flex-col gap-xs text-dark-500">
+    <Link href={`/events/${event.id}`}>
+      <div className="h-full group flex flex-col justify-between rounded-xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 overflow-hidden">
+        <div className="flex flex-col">
           {/* Image */}
-          <div className="h-[200px]">
+          <div className="relative h-[200px] w-full">
             <Image
               src={
                 event?.images?.length
@@ -28,40 +27,52 @@ const EventCard = ({ event, sectionSlug }: EventCardProps) => {
                   : "/next.svg"
               }
               alt={event.name}
-              width={600}
-              height={400}
-              className="w-full h-full rounded-lg object-cover mb-md"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 group-hover:bg-none transition-transform duration-300 to-transparent" />
+
+            {sectionSlug === "upcoming-events" && (
+              <div className="absolute top-2 left-2 px-2 py-1 rounded-lg bg-primary-500 text-white text-xs font-medium">
+                Upcoming
+              </div>
+            )}
           </div>
 
           {/* Content */}
-          <div className="flex flex-col gap-xs p-xs">
-            <div className="font-bold text-lg text-center">{event.name}</div>
+          <div className="flex flex-col gap-2 px-md py-sm">
+            <h3 className="text-xl font-semibold text-dark-500 line-clamp-1">
+              {event.name}
+            </h3>
 
             {sectionSlug === "upcoming-events" && (
               <EventTimeToLeft isoDate={event.date} />
             )}
 
-            <div className="flex gap-xs items-center">
-              <DateRangeIcon color="primary" />
-              <div>{transformIsoDateToReadable(event.date)}</div>
+            <div className="flex items-center gap-2 text-dark-400 text-sm">
+              <DateRangeIcon fontSize="small" className="text-primary-500" />
+              {transformIsoDateToReadable(event.date)}
             </div>
 
-            <div className="flex gap-xs items-center">
-              <PlaceIcon color="primary" />
-              <div>{event.location}</div>
+            <div className="flex items-center gap-2 text-dark-400 text-sm">
+              <PlaceIcon fontSize="small" className="text-primary-500" />
+              {event.location}
             </div>
 
-            <div className="text-sm line-clamp-1">{event.description}</div>
+            <p className="text-dark-300 text-sm line-clamp-2">
+              {event.description}
+            </p>
           </div>
         </div>
 
-        <Button>
-          <div>Join</div>
-        </Button>
+        {/* Button */}
+        <div className="border-t border-gray-100 px-xl py-sm">
+          <Button className="w-full!">
+            <div>Join</div>
+          </Button>
+        </div>
       </div>
     </Link>
   );
-};
-
-export default EventCard;
+}

@@ -17,11 +17,11 @@ const EventsGrid = ({ events, sectionSlug, sectionName, totalEvents }: EventsGri
       <div className="container px-xs mx-auto flex flex-col gap-lg my-md">
         <EventTitle sectionName={sectionName} children={undefined} />
 
-        <ul className="flex gap-md flex-wrap">
+        <ul className="grid gap-md grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {events.map((event) => (
             <li
               key={event.id}
-              className="flex-1 min-w-[300px]" // keep min-width from SCSS
+              className="" // keep min-width from SCSS
             >
               <EventCard event={event} sectionSlug={sectionSlug} />
             </li>

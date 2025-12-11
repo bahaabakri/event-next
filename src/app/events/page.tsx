@@ -8,7 +8,7 @@ export default async function EventsPage({ searchParams}: EventsPageProps) {
     const events = await getEvents(await searchParams)
     // console.log(events)
     return (
-            <div className="">
+            <div className="mt-24">
                 <EventsGrid
                     events={events.data}
                     totalEvents={events.meta.total}
