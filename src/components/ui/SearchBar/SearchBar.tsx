@@ -60,7 +60,7 @@ const SearchBar = () => {
                 }
 
                 <div  className={styles['search-bar-icon-wrapper']} onClick={openSearchBar} >
-                    <SearchIcon sx={{color: 'var(--primary-color)'}} />
+                    <SearchIcon color='primary' />
                 </div>
             </motion.div>
 

@@ -29,11 +29,6 @@ const navMenuItems:NavMenuItem[] = [
         path: '/about-us'
     },
     {
-        id:5,
-        title: 'New Event',
-        path: '/new-event'
-    },
-    {
         id:6,
         title: 'Join',
         path: '/login',

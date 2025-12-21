@@ -26,7 +26,7 @@ const Button: FC<ButtonProps> = ({
       })}
       className={clsx(
         " rounded-xl", // wrapper styles
-        "w-fit mx-auto",
+        "w-fit",
         isSecondButton
           ? "bg-white text-dark-500 shadow-2xl"
           : "bg-primary-500 text-white",
