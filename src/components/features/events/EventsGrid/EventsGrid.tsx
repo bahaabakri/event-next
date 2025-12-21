@@ -3,6 +3,8 @@ import EventCard from '@/components/features/events/EventCard/EventCard'
 import EventTitle from '@/components/features/events/EventTitle/EventTitle'
 import { MyEvent } from '@/types/events.type'
 import CustomPagination from '@/components/ui/CustomPagination/CustomPagination'
+import BannerSwiper from '@/components/ui/BannerSwipper/BannerSwipper'
+import { MyHero } from '@/types/hero.type'
 
 interface EventsGridProps {
   sectionName: string;
@@ -14,6 +16,7 @@ interface EventsGridProps {
 const EventsGrid = ({ events, sectionSlug, sectionName, totalEvents }: EventsGridProps) => {
   return (
     <>
+    <BannerSwiper />
       <div className="container px-xs mx-auto flex flex-col gap-lg my-md">
         <EventTitle sectionName={sectionName} children={undefined} />
 
