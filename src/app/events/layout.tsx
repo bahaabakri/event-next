@@ -3,5 +3,5 @@ export default function EventsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="p-xl">{children}</section>;
+  return <section className="container mx-auto mt-30">{children}</section>;
 }

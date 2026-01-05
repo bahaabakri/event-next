@@ -9,7 +9,7 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
   const events = await getEvents(await searchParams);
   // console.log(events)
   return (
-    <div className="mt-24 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <EventsSwiper />
       <EventsGrid
         events={events.data}

@@ -17,7 +17,7 @@ const EventsGrid = ({ events, sectionSlug, sectionName, totalEvents }: EventsGri
   return (
     <>
     <BannerSwiper />
-      <div className="container px-xs mx-auto flex flex-col gap-lg my-md">
+      <div className="flex flex-col gap-lg my-md">
         <EventTitle sectionName={sectionName} children={undefined} />
 
         <ul className="grid gap-md grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

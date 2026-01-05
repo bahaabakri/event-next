@@ -1,5 +1,6 @@
 import { SelectedImage } from "./images.type";
 import { Pagination } from "./pagination.type";
+import { Ticket } from "./tickets.type";
 import { User } from "./user.type";
 
 export type EventsFilters = {
@@ -20,9 +21,7 @@ export type MyEvent = {
     createdAt: Date;
     updatedAt: Date;
     createdAdminId: number;
-    joinedUsers: {
-        user: User
-    }[]
+    tickets: Ticket[]
     createdBy: User
 }
 
