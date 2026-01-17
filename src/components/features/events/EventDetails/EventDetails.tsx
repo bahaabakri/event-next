@@ -14,6 +14,7 @@ import useAuth from "@/hooks/useAuth";
 import { log } from "console";
 import BannerSwiper from "@/components/ui/BannerSwipper/BannerSwipper";
 import StaticMap from "@/components/ui/StaticMap/StaticMap";
+import EventPlans from "../EventPlans/EventPlans";
 interface EventDetailsProps {
   event: MyEvent;
 }
@@ -26,7 +27,9 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     message: "",
   });
   const [mounted, setMounted] = useState(false);
-
+const [selectedPlans, setSelectedPlans] = useState<
+  { planId: number; quantity: number }[]
+>([]);
 useEffect(() => {
   setMounted(true);
 }, []);
@@ -46,6 +49,25 @@ useEffect(() => {
       showSnackbar(formStateRes.message, "error");
     }
   }, [formStateRes.success]);
+
+  const handlePlanChange = (planId: number, quantity: number) => {
+  setSelectedPlans(prev => {
+    if (quantity === 0) {
+      return prev.filter(p => p.planId !== planId);
+    }
+
+    const exists = prev.find(p => p.planId === planId);
+
+    if (exists) {
+      return prev.map(p =>
+        p.planId === planId ? { ...p, quantity } : p
+      );
+    }
+
+    return [...prev, { planId, quantity }];
+  });
+};
+
   return (
     <div className="container px-2 flex flex-col gap-5 m-auto mt-36">
       <BannerSwiper
@@ -63,6 +85,8 @@ useEffect(() => {
             <StaticMap lat={event.lat} lng={event.lng} />
         </div>
       </div>
+      <EventPlans plans={event.plans}   onPlanChange={handlePlanChange}
+ />
       {mounted &&isAuthenticated && !isUserAlreadyJoined && (
         <form action={formAction}>
           <input type="hidden" name="id" value={event.id} />
@@ -71,6 +95,7 @@ useEffect(() => {
           </Button>
         </form>
       )}
+
     </div>
   );
 };

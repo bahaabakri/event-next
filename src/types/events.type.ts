@@ -8,23 +8,28 @@ export type EventsFilters = {
     perPage?: number;
 }
 export type MyEvent = {
-    id: number;
-    name: string;
-    description: string;
-    date: string;
-    location: string;
-    lng: number;
-    lat: number;
-    isActive: boolean;
-    isApproved: boolean;
-    images: SelectedImage[];
-    createdAt: Date;
-    updatedAt: Date;
-    createdAdminId: number;
-    tickets: Ticket[]
-    createdBy: User
+  id: number
+  name: string
+  description: string
+  date: string
+  location: string
+  lng: number
+  lat: number
+  isActive: boolean
+  isApproved: boolean
+  images: SelectedImage[]
+  createdBy: User | null
+  tickets: Ticket[]
+  plans: Plan[]
 }
-
+export type Plan = {
+  id: number
+  name: string
+  description: string
+  price: number
+  currency: string
+  capacity: number
+}
 export type MyEventResponse = {
     data: MyEvent[];
     meta: Pagination;
