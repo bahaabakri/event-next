@@ -53,7 +53,7 @@ export const theme = createTheme({
     // Mantine-style arrays in a separate object
     customColors: {
       roseRed: colors.roseRed,
-      gray: colors.gray,
+      gray: colors.mygray,
       dark: colors.dark,
       cyan: colors.cyan,
       success: colors.success,

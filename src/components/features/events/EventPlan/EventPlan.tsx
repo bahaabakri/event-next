@@ -8,6 +8,7 @@ const EventPlan: FC<{
 }> = ({ plan, onQuantityChange }) => {
   const [qty, setQty] = useState(0);
   const update = (value: number) => {
+    if(qty >= plan.capacity) return;
     const newVal = Math.max(0, value);
     setQty(newVal);
     onQuantityChange(plan.id, newVal);
@@ -37,7 +38,7 @@ const EventPlan: FC<{
         <div className="flex items-center gap-3 mt-4">
           <Button
             onClick={() => update(qty - 1)}
-            className="px-3 py-1 border rounded"
+            className=""
           >
             <div>-</div>
           </Button>
@@ -46,7 +47,8 @@ const EventPlan: FC<{
 
           <Button
             onClick={() => update(qty + 1)}
-            className="px-3 py-1 border rounded"
+            disabled={qty >= plan.capacity}
+            className=""
           >
             <div>+</div>
           </Button>

@@ -27,12 +27,13 @@ const EventDetails = ({ event }: EventDetailsProps) => {
     message: "",
   });
   const [mounted, setMounted] = useState(false);
-const [selectedPlans, setSelectedPlans] = useState<
-  { planId: number; quantity: number }[]
->([]);
-useEffect(() => {
-  setMounted(true);
-}, []);
+  const [selectedPlans, setSelectedPlans] = useState<
+    { planId: number; quantity: number }[]
+  >([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   console.log("isUserAlreadyJoined", isUserAlreadyJoined);
   console.log("isAuthenticated", isAuthenticated);
   console.log("user", user);
@@ -51,22 +52,20 @@ useEffect(() => {
   }, [formStateRes.success]);
 
   const handlePlanChange = (planId: number, quantity: number) => {
-  setSelectedPlans(prev => {
-    if (quantity === 0) {
-      return prev.filter(p => p.planId !== planId);
-    }
+    setSelectedPlans((prev) => {
+      if (quantity === 0) {
+        return prev.filter((p) => p.planId !== planId);
+      }
 
-    const exists = prev.find(p => p.planId === planId);
+      const exists = prev.find((p) => p.planId === planId);
 
-    if (exists) {
-      return prev.map(p =>
-        p.planId === planId ? { ...p, quantity } : p
-      );
-    }
+      if (exists) {
+        return prev.map((p) => (p.planId === planId ? { ...p, quantity } : p));
+      }
 
-    return [...prev, { planId, quantity }];
-  });
-};
+      return [...prev, { planId, quantity }];
+    });
+  };
 
   return (
     <div className="container px-2 flex flex-col gap-5 m-auto mt-36">
@@ -82,20 +81,30 @@ useEffect(() => {
           <div className="text-xs md:text-sm;">{event.description}</div>
         </div>
         <div className="flex-1">
-            <StaticMap lat={event.lat} lng={event.lng} />
+          <StaticMap lat={event.lat} lng={event.lng} />
         </div>
       </div>
-      <EventPlans plans={event.plans}   onPlanChange={handlePlanChange}
- />
-      {mounted &&isAuthenticated && !isUserAlreadyJoined && (
-        <form action={formAction}>
-          <input type="hidden" name="id" value={event.id} />
-          <Button type="submit" isPending={isPending}>
-            <div>Join Event</div>
-          </Button>
-        </form>
+      <EventPlans plans={event.plans} onPlanChange={handlePlanChange} />
+      {mounted && !isUserAlreadyJoined && (
+        <div className="flex flex-col gap-2">
+          <form action={formAction}>
+            {selectedPlans.length > 0 && (
+              <div className="flex gap-5">
+                <div className="text-mygray-500">Total:</div>
+                <div className="font-bold text-xl text-primary-500">
+                  {selectedPlans.reduce((acc, plan) => acc + plan.quantity * (event.plans.find(p => p.id === plan.planId)?.price || 0), 0)}{' Dollars '}
+                  {`(${selectedPlans.reduce((acc, plan) => acc + plan.quantity, 0)}`}{" "}
+                  Tickets{')'}
+                </div>
+              </div>
+            )}
+            <input type="hidden" name="id" value={event.id} />
+            <Button type="submit" isPending={isPending}>
+              <div>Join Event</div>
+            </Button>
+          </form>
+        </div>
       )}
-
     </div>
   );
 };

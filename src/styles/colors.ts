@@ -3,7 +3,7 @@ export const colors = {
         "#fbe7ed", "#f6c2d1", "#f09cb4", "#ea7597", "#e44f7a",
         "#c21e56", "#a31a4a", "#85153d", "#661131", "#470c24"
     ],
-    gray : [
+    mygray : [
         "#f8f9fa", "#f1f3f5", "#e9ecef", "#dee2e6", "#ced4da",
         "#adb5bd", "#868e96", "#495057", "#343a40", "#212529"
     ],

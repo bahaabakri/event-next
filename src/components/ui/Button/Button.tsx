@@ -27,6 +27,7 @@ const Button: FC<ButtonProps> = ({
       className={clsx(
         " rounded-xl", // wrapper styles
         "w-fit",
+        (buttonProps.disabled || isPending) ? "text-mygray-400 bg-mygray-600" :
         isSecondButton
           ? "bg-white text-dark-500 shadow-2xl"
           : "bg-primary-500 text-white",
@@ -35,10 +36,7 @@ const Button: FC<ButtonProps> = ({
     >
       <button
         {...buttonProps}
-        className={clsx(
-          "text-md lg:text-lg px-lg py-xs shadow-sm flex gap-xs items-center justify-center cursor-pointer rounded-xl w-full text-center",
-          buttonProps.disabled || (isPending && "text-gray-600 bg-gray-800")
-        )}
+        className="text-md lg:text-lg px-lg py-xs shadow-sm flex gap-xs items-center justify-center cursor-pointer rounded-xl w-full text-center"
       >
         {isPending && <div className="spinner" />}
         {children}
