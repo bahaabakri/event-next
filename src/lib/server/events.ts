@@ -31,13 +31,20 @@ export async function getEventById(id: string | number): Promise<MyEvent>  {
 }
 
 export async  function joinEvent(prevState: any, formData: FormData ) {
-  const id = formData.get("id") as string;
+  const id = +(formData.get("id") as string);
+  const plans = JSON.parse(formData.get("plans") as string);
+  console.log('plans', plans);
+  console.log('id', id);
+  console.log('typeof id', typeof id);
+  console.log('typeof plans', typeof plans);
   const cookieStore = await cookies() // 👈 await it
   const token = cookieStore.get("access_token")?.value
-  const res = await fetch(`${API_BASE_URL}/user-events/${id}/join`, {
+  const res = await fetch(`${API_BASE_URL}/ticket/join`, {
     method: "POST",
+    body: JSON.stringify({ eventId: +id, plans }),
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   })
       const data = (await res.json()) as JoinEventResponse;
@@ -47,9 +54,11 @@ export async  function joinEvent(prevState: any, formData: FormData ) {
         message: data?.message || "Failed to Join Event",
       };
     }
-    revalidatePath(`/events/${id}`)
+    // revalidatePath(`/events/${id}`)
     return {
       success: true,
+      clientSecret: data.clientSecret,
+      paymentIntentId: data.paymentIntentId,
       message: data?.message || "Event has been joined Successfully",
     };
 }

@@ -37,8 +37,7 @@ export type MyEventResponse = {
 
 export type JoinEventResponse = {
     message:string;
-    userEvent: {
-        user:User;
-        event:MyEvent
-    }
+    tickets: Ticket[];
+    clientSecret?: string;
+    paymentIntentId?: string;
 }

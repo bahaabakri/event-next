@@ -15,12 +15,16 @@ import { log } from "console";
 import BannerSwiper from "@/components/ui/BannerSwipper/BannerSwipper";
 import StaticMap from "@/components/ui/StaticMap/StaticMap";
 import EventPlans from "../EventPlans/EventPlans";
+import useNav from "@/hooks/useNav";
+import { useRouter } from "next/navigation";
+import { form } from "framer-motion/client";
 interface EventDetailsProps {
   event: MyEvent;
 }
 const EventDetails = ({ event }: EventDetailsProps) => {
   const { showSnackbar } = useSnackbar();
   const { user, isAuthenticated } = useAuth();
+  const router = useRouter();
   const [isUserAlreadyJoined, setIsUserAlreadyJoined] = useState(false);
   const [formStateRes, formAction, isPending] = useActionState(joinEvent, {
     success: false,
@@ -30,26 +34,28 @@ const EventDetails = ({ event }: EventDetailsProps) => {
   const [selectedPlans, setSelectedPlans] = useState<
     { planId: number; quantity: number }[]
   >([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
     setMounted(true);
   }, []);
-  console.log("isUserAlreadyJoined", isUserAlreadyJoined);
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("user", user);
-  console.log("event", event);
+  // console.log("isUserAlreadyJoined", isUserAlreadyJoined);
+  // console.log("isAuthenticated", isAuthenticated);
+  // console.log("user", user);
+  // console.log("event", event);
+  console.log('formStateRes', formStateRes);
+  
   useEffect(() => {
     setIsUserAlreadyJoined(
       event.tickets.find((el) => el.user.id === user?.id) ? true : false
     );
   }, [user]);
   useEffect(() => {
-    if (formStateRes.success) {
-      showSnackbar(formStateRes.message, "success");
+    if (formStateRes.success && formStateRes.clientSecret && formStateRes.paymentIntentId) {
+      // showSnackbar(formStateRes.message, "success");
+      router.push(`/checkout?cs=${formStateRes.clientSecret}&paymentIntent=${formStateRes.paymentIntentId}`);
     } else {
       showSnackbar(formStateRes.message, "error");
     }
-  }, [formStateRes.success]);
+  }, [formStateRes.success, formStateRes.clientSecret, formStateRes.paymentIntentId]);
 
   const handlePlanChange = (planId: number, quantity: number) => {
     setSelectedPlans((prev) => {
@@ -92,13 +98,26 @@ const EventDetails = ({ event }: EventDetailsProps) => {
               <div className="flex gap-5">
                 <div className="text-mygray-500">Total:</div>
                 <div className="font-bold text-xl text-primary-500">
-                  {selectedPlans.reduce((acc, plan) => acc + plan.quantity * (event.plans.find(p => p.id === plan.planId)?.price || 0), 0)}{' Dollars '}
+                  {selectedPlans.reduce(
+                    (acc, plan) =>
+                      acc +
+                      plan.quantity *
+                        (event.plans.find((p) => p.id === plan.planId)?.price ||
+                          0),
+                    0
+                  )}
+                  {" Dollars "}
                   {`(${selectedPlans.reduce((acc, plan) => acc + plan.quantity, 0)}`}{" "}
-                  Tickets{')'}
+                  Tickets{")"}
                 </div>
               </div>
             )}
             <input type="hidden" name="id" value={event.id} />
+            <input
+              type="hidden"
+              name="plans"
+              value={JSON.stringify(selectedPlans)}
+            />
             <Button type="submit" isPending={isPending}>
               <div>Join Event</div>
             </Button>
