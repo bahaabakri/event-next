@@ -18,6 +18,7 @@ import EventPlans from "../EventPlans/EventPlans";
 import useNav from "@/hooks/useNav";
 import { useRouter } from "next/navigation";
 import { form } from "framer-motion/client";
+import { TicketStatus } from "@/enums/ticket-status.enum";
 interface EventDetailsProps {
   event: MyEvent;
 }
@@ -41,11 +42,12 @@ const EventDetails = ({ event }: EventDetailsProps) => {
   // console.log("isAuthenticated", isAuthenticated);
   // console.log("user", user);
   // console.log("event", event);
-  console.log('formStateRes', formStateRes);
-  
+  console.log("formStateRes", formStateRes);
+  console.log("event", event);
+
   useEffect(() => {
     setIsUserAlreadyJoined(
-      event.tickets.find((el) => el.user.id === user?.id) ? true : false
+      event.tickets.find((el) => el.user.id === user?.id && el.status !== TicketStatus.CANCELLED) ? true : false
     );
   }, [user]);
   useEffect(() => {

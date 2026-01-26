@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button/Button";
+import CustomAlert from "@/components/ui/CustomAlert/CustomAlert";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -38,7 +39,7 @@ export default function CheckoutForm() {
     }
 
     if (paymentIntent?.status === "succeeded") {
-      router.push("/events/checkout/success");
+      router.push("/checkout/success");
     }
   };
 
@@ -53,7 +54,7 @@ export default function CheckoutForm() {
         <div> Pay Now</div>
       </Button>
 
-      {error && <p className="text-error-500 text-sm">{error}</p>}
+      {error && <CustomAlert message={error} status="error" />}
     </form>
   );
 }
